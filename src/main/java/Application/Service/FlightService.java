@@ -52,8 +52,9 @@ public class FlightService {
      * @return the newly added flight if the add operation was successful, including the flight_id. We do this to
      *         inform our provide the front-end client with information about the added Flight.
      */
-    public Flight addFlight(Flight flight){
-        return null;
+    public Flight addFlight(Flight flight) {
+        return flightDAO.insertFlight(flight);
+        
     }
 
     /**
@@ -70,6 +71,12 @@ public class FlightService {
      *         user should have some insight if they attempted to edit a nonexistent flight.)
      */
     public Flight updateFlight(int flight_id, Flight flight){
+        flight = flightDAO.getFlightById(flight_id);
+        if (flight != null) {
+            flightDAO.updateFlight(flight_id, flight);
+            return flight;
+        }
+
         return null;
     }
 
@@ -80,7 +87,7 @@ public class FlightService {
      * @return all flights in the database.
      */
     public List<Flight> getAllFlights() {
-        return null;
+        return flightDAO.getAllFlights();
     }
 
     /**
@@ -92,6 +99,6 @@ public class FlightService {
      * @return all flights departing from departure_city and arriving at arrival_city.
      */
     public List<Flight> getAllFlightsFromCityToCity(String departure_city, String arrival_city) {
-        return null;
+        return flightDAO.getAllFlightsFromCityToCity(departure_city, arrival_city);
     }
 }
